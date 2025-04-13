@@ -1,0 +1,265 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #00211d;
+  color: #f1f1f1;
+}
+
+/* Header */
+header {
+  background: #00755e;
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  border-bottom: 5px solid #004e41;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+header p {
+  margin-top: 0.8rem;
+  font-size: 1.1rem;
+}
+
+/* Auth Buttons (Home Page) */
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.auth-buttons a {
+  color: white;
+  background-color: #00604c;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.auth-buttons a:hover {
+  background-color: #009373;
+  border: 1px solid white;
+}
+
+/* Logo */
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-logo img {
+  height: 60px;
+  background-color: white;
+  padding: 0.3rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.brand-logo h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: white;
+}
+
+.brand-logo h1 span:last-child {
+  color: #ffcc00;
+}
+
+/* Buttons */
+.btn {
+  background: white;
+  color: #00755e;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  background: #e0f4ee;
+}
+
+/* Pop effect on click */
+.pop {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Form Section (Dark Themed) */
+section {
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  text-align: left;
+  background: #00453b;
+  box-shadow: none;
+  border: 2px solid #006e5a;
+  border-radius: 10px;
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Inputs - match dark theme */
+form input,
+form select {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  background: #00352d;
+  color: #f1f1f1;
+  border: 1px solid #00755e;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  border-color: #00d6a2;
+  box-shadow: 0 0 8px rgba(0, 214, 162, 0.4);
+  outline: none;
+}
+
+form label {
+  font-weight: bold;
+  display: block;
+  margin-top: 1rem;
+  color: #f1f1f1;
+}
+
+form p {
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #00755e;
+  color: white;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: #00453b;
+  color: #f1f1f1;
+}
+
+table th,
+table td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #00755e;
+}
+
+table th {
+  background: #00755e;
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  background: #004e41;
+}
+
+.navbar li {
+  margin: 0;
+}
+
+.navbar a {
+  display: block;
+  padding: 0.8rem 1.2rem;
+  text-decoration: none;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.navbar a:hover {
+  background: #009373;
+}
+
+.navbar a.active {
+  background: transparent !important;
+  color: #00d6a2 !important;
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  section {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .auth-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  table td {
+    padding: 0.5rem;
+    text-align: right;
+    position: relative;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    font-weight: bold;
+    text-align: left;
+  }
+}
