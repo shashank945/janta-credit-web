@@ -16,7 +16,7 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // ✅ CORS configuration (adjust origin for production deployment if needed)
 app.use(cors({
-  origin: 'http://127.0.0.1:5500', // For local dev; update with frontend URL on deployment
+  origin: ['http://127.0.0.1:5500','https://janta-credit-web.onrender.com'],// For local dev; update with frontend URL on deployment
   methods: ['GET', 'POST'],
   credentials: false
 }));

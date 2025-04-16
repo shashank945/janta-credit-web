@@ -68,7 +68,7 @@
       }
 
       try {
-        const res = await fetch('http://localhost:3000/api/auth/login', {
+        const res = await fetch('https://janta-credit-web.onrender.com/api/auth/login', {  // Updated URL
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phone, password })

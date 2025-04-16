@@ -92,7 +92,7 @@
       const password = document.getElementById('password').value.trim();
 
       try {
-        const res = await fetch('http://localhost:3000/api/auth/register', {
+        const res = await fetch('https://janta-credit-web.onrender.com/api/auth/register', {  // Updated URL
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, phone, password })
