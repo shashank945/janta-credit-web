@@ -61,6 +61,10 @@ router.post("/login", async (req, res) => {
     }
 
     console.log("✅ [LOGIN] Login successful for:", user.name);
+
+    // Store phone number in session after login
+    req.session.phone = phone; // Save phone to session
+
     res.status(200).json({
       message: "Login successful",
       user: { name: user.name, phone: user.phone },

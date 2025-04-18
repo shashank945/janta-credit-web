@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JantaCredit - Micro Loans</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -59,6 +60,64 @@
     h1, h2, p, li {
       color: #e9fefa;
     }
+
+    /* Slide-up animation */
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Slide-left animation */
+    @keyframes slideLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Slide-right animation */
+    @keyframes slideRight {
+      0% {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 1s ease-out;
+    }
+
+    .slide-left {
+      animation: slideLeft 1s ease-out;
+    }
+
+    .slide-right {
+      animation: slideRight 1s ease-out;
+    }
+
+    .how-it-works-box {
+      border-radius: 12px;
+      background: #1d3d3a;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      min-height: 220px; /* Ensures the boxes are the same size */
+    }
+
   </style>
 </head>
 <body>
@@ -104,46 +163,66 @@
       <div class="col-md-10">
 
         <!-- What is JantaCredit -->
-<div class="section-box">
-  <h2 class="mb-3"><i class="fa-solid fa-circle-info me-2"></i>What is JantaCredit?</h2>
-  <p>
-    India is home to over 1.4 billion people, yet a large portion of the population still lacks access to formal credit systems. While digital finance has advanced rapidly in urban areas, rural and semi-urban communities continue to struggle with access to safe, reliable, and fair lending options. Informal moneylenders often exploit borrowers with extremely high interest rates and no legal protections, creating a vicious cycle of debt and poverty. Traditional banks, on the other hand, are reluctant to offer loans to individuals without a formal credit history, stable income, or collateral.
-  </p>
-  <p>
-    <strong>JantaCredit</strong> was built to bridge this gap. Our mission is to create an inclusive, community-powered lending ecosystem that empowers individuals—especially those from underserved communities—to access credit safely and responsibly. By leveraging digital technologies, peer verification through guarantors, and gamified credit-building tools, JantaCredit ensures that financial support is available to those who need it most.
-  </p>
-  <p>
-    In India, over <strong>190 million adults remain unbanked</strong>, and even more are unable to access loans from regulated institutions due to poor or non-existent credit scores. Migrant workers, gig economy laborers, small-scale farmers, and women-led households often face the brunt of this exclusion. Even those who manage to open a bank account are not automatically included in the formal credit ecosystem.
-  </p>
-  <p>
-    The current financial infrastructure heavily favors individuals with existing credit history and formal income proofs—requirements that inherently exclude a large segment of India’s informal workforce. This disconnect not only restricts economic opportunities for individuals but also hampers the country's broader goals of financial inclusion and equitable development.
-  </p>
-  <p>
-    JantaCredit offers a platform where users can easily apply for micro-loans without traditional credit scores or collateral. Instead, our system is based on a <strong>community-guarantee model</strong>—borrowers submit the details of three guarantors (friends, family, or trusted individuals) who vouch for their credibility. This restores the social trust model into the digital finance world.
-  </p>
-  <p>
-    We also feature an <strong>intuitive EMI calculator</strong>, <strong>multilingual support</strong>, and <strong>UPI-based repayment</strong> to ensure the platform is simple and accessible. A dynamic <strong>dashboard</strong> helps users track their credit journey, view repayment schedules, and receive financial literacy tips.
-  </p>
-  <p>
-    JantaCredit doesn’t just stop at access—we believe in building long-term financial health. Users are rewarded for on-time repayments with badges and points through our <strong>gamified credit-building system</strong>, encouraging responsible borrowing behavior.
-  </p>
-  <p>
-    Our platform was created with one goal in mind: to democratize credit in India. We believe every person—regardless of their social status, income level, or geographic location—deserves the opportunity to grow financially. JantaCredit is more than a loan platform; it’s a step toward <strong>financial dignity</strong> for all.
-  </p>
-  <p>
-    In the long run, we envision JantaCredit as a trusted partner in rural and semi-urban India's financial journeys, helping millions escape exploitative lending practices and move toward self-reliance and prosperity.
-  </p>
-</div>
+        <div class="section-box">
+          <h2 class="mb-3"><i class="fa-solid fa-circle-info me-2"></i>What is JantaCredit?</h2>
+          <p>
+            India is home to over 1.4 billion people, yet a large portion of the population still lacks access to formal credit systems. While digital finance has advanced rapidly in urban areas, rural and semi-urban communities continue to struggle with access to safe, reliable, and fair lending options. Informal moneylenders often exploit borrowers with extremely high interest rates and no legal protections, creating a vicious cycle of debt and poverty. Traditional banks, on the other hand, are reluctant to offer loans to individuals without a formal credit history, stable income, or collateral.
+          </p>
+          <p>
+            <strong>JantaCredit</strong> was built to bridge this gap. Our mission is to create an inclusive, community-powered lending ecosystem that empowers individuals—especially those from underserved communities—to access credit safely and responsibly. By leveraging digital technologies, peer verification through guarantors, and gamified credit-building tools, JantaCredit ensures that financial support is available to those who need it most.
+          </p>
+          <p>
+            In India, over <strong>190 million adults remain unbanked</strong>, and even more are unable to access loans from regulated institutions due to poor or non-existent credit scores. Migrant workers, gig economy laborers, small-scale farmers, and women-led households often face the brunt of this exclusion. Even those who manage to open a bank account are not automatically included in the formal credit ecosystem.
+          </p>
+          <p>
+            The current financial infrastructure heavily favors individuals with existing credit history and formal income proofs—requirements that inherently exclude a large segment of India’s informal workforce. This disconnect not only restricts economic opportunities for individuals but also hampers the country's broader goals of financial inclusion and equitable development.
+          </p>
 
+          <!-- Graph inserted here -->
+          <div class="slide-up">
+            <canvas id="impactChart"></canvas>
+          </div>
+
+          <p>
+            JantaCredit offers a platform where users can easily apply for micro-loans without traditional credit scores or collateral. Instead, our system is based on a <strong>community-guarantee model</strong>—borrowers submit the details of three guarantors (friends, family, or trusted individuals) who vouch for their credibility. This restores the social trust model into the digital finance world.
+          </p>
+          <p>
+            We also feature an <strong>intuitive EMI calculator</strong>, <strong>multilingual support</strong>, and <strong>UPI-based repayment</strong> to ensure the platform is simple and accessible. A dynamic <strong>dashboard</strong> helps users track their credit journey, view repayment schedules, and receive financial literacy tips.
+          </p>
+          <p>
+            JantaCredit doesn’t just stop at access—we believe in building long-term financial health. Users are rewarded for on-time repayments with badges and points through our <strong>gamified credit-building system</strong>, encouraging responsible borrowing behavior.
+          </p>
+          <p>
+            Our platform was created with one goal in mind: to democratize credit in India. We believe every person—regardless of their social status, income level, or geographic location—deserves the opportunity to grow financially. JantaCredit is more than a loan platform; it’s a step toward <strong>financial dignity</strong> for all.
+          </p>
+          <p>
+            In the long run, we envision JantaCredit as a trusted partner in rural and semi-urban India's financial journeys, helping millions escape exploitative lending practices and move toward self-reliance and prosperity.
+          </p>
+        </div>
 
         <!-- How It Works -->
         <div class="section-box">
           <h2 class="mb-4"><i class="fa-solid fa-list-check me-2"></i>How It Works</h2>
-          <ul class="list-unstyled">
-            <li class="mb-3"><i class="fa-solid fa-user text-success me-2"></i> Fill your basic details</li>
-            <li class="mb-3"><i class="fa-solid fa-users text-success me-2"></i> Add 3 guarantors</li>
-            <li class="mb-3"><i class="fa-solid fa-indian-rupee-sign text-success me-2"></i> Get your loan approved & disbursed</li>
-          </ul>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="how-it-works-box slide-left">
+                <h4><i class="fa-solid fa-user text-success me-2"></i> Fill your basic details</h4>
+                <p>Fill out your basic information to get started with JantaCredit.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="how-it-works-box slide-up">
+                <h4><i class="fa-solid fa-users text-success me-2"></i> Add 3 guarantors</h4>
+                <p>Provide details of three trusted guarantors to vouch for your credibility.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="how-it-works-box slide-right">
+                <h4><i class="fa-solid fa-indian-rupee-sign text-success me-2"></i> Get your loan approved & disbursed</h4>
+                <p>Once verified, your loan is approved and disbursed to your account.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- About Section -->
@@ -159,7 +238,7 @@
           <ul class="mb-0">
             <li>Email: support@jantacredit.com</li>
             <li>Phone: +91 9876543210</li>
-            <li>Address: 123 Street Vendor Lane, Microcity, India</li>
+            <li>Address: National Highway 2, D-3, UPSIDC Industrial Area, Naini, Prayagraj, Uttar Pradesh 211010</li>
           </ul>
         </div>
 
@@ -170,6 +249,41 @@
   <footer class="text-center py-3 border-top">
     <p class="text-success mb-0">&copy; 2025 JantaCredit. All rights reserved.</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var ctx = document.getElementById('impactChart').getContext('2d');
+    var impactChart = new Chart(ctx, {
+      type: 'line', // Line graph
+      data: {
+        labels: ['Unbanked Adults', 'Loan Access', 'Loan Repayment Success'],
+        datasets: [{
+          label: 'Impact of JantaCredit',
+          data: [190, 75, 80], // Example data values
+          borderColor: '#33FF57',
+          backgroundColor: 'rgba(51, 255, 87, 0.2)', // Light green with transparency
+          fill: true,
+          tension: 0.4, // Smooth line
+          borderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 20
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top'
+          }
+        }
+      }
+    });
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

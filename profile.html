@@ -100,13 +100,13 @@
     <div class="profile-info">
       <h4><i class="fa-solid fa-id-card me-2"></i>Your Information</h4>
       
-      <p><span class="info-label">Name:</span> <span class="info-value">Ravi Kumar</span></p>
-      <p><span class="info-label">Age:</span> <span class="info-value">25</span></p>
-      <p><span class="info-label">Address:</span> <span class="info-value">123 Main Street, Delhi</span></p>
-      <p><span class="info-label">Credit Score:</span> <span class="info-value">735</span></p>
-      <p><span class="info-label">Contact Number:</span> <span class="info-value">+91 9876543210</span></p>
-      <p><span class="info-label">Father's Name:</span> <span class="info-value">Mr. Rajesh Kumar</span></p>
-      <p><span class="info-label">Date of Birth:</span> <span class="info-value">01/01/2000</span></p>
+      <p><span class="info-label">Name:</span> <span id="userName" class="info-value">Loading...</span></p>
+      <p><span class="info-label">Age:</span> <span id="userAge" class="info-value">Loading...</span></p>
+      <p><span class="info-label">Address:</span> <span id="userAddress" class="info-value">Loading...</span></p>
+      <p><span class="info-label">Credit Score:</span> <span id="userCreditScore" class="info-value">Loading...</span></p>
+      <p><span class="info-label">Contact Number:</span> <span id="userPhone" class="info-value">Loading...</span></p>
+      <p><span class="info-label">Father's Name:</span> <span id="userFatherName" class="info-value">Loading...</span></p>
+      <p><span class="info-label">Date of Birth:</span> <span id="userDob" class="info-value">Loading...</span></p>
     </div>
 
     <!-- Document Upload Section -->
@@ -138,6 +138,37 @@
       alert("No phone found in session. Please login again.");
       window.location.href = "login.html";
     }
+
+    // Fetch user profile data from the backend
+    async function fetchUserProfile() {
+      try {
+        const response = await fetch('/api/profile', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${phone}`, // Send phone number as auth token
+          },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          document.getElementById('userName').textContent = data.name || 'Not available';
+          document.getElementById('userAge').textContent = data.age || 'Not available';
+          document.getElementById('userAddress').textContent = data.address || 'Not available';
+          document.getElementById('userCreditScore').textContent = data.creditScore || 'Not available';
+          document.getElementById('userPhone').textContent = data.phone || 'Not available';
+          document.getElementById('userFatherName').textContent = data.fathersName || 'Not available';
+          document.getElementById('userDob').textContent = data.dob || 'Not available';
+        } else {
+          alert('Error fetching profile data: ' + data.error);
+        }
+      } catch (error) {
+        console.error('Profile fetch error:', error);
+        alert('Error connecting to server. Please try again later.');
+      }
+    }
+
+    fetchUserProfile();
 
     // Handle document upload
     document.getElementById('docUploadForm').addEventListener('submit', async (e) => {
