@@ -10,7 +10,7 @@ const path = require("path");
 const session = require("express-session");
 
 const Redis = require("ioredis"); // ✅ ioredis
-const RedisStore = require("connect-redis").default; // ✅ use .default for v8+
+const connectRedis = require("connect-redis"); // ✅ use connect-redis
 
 // Importing routes
 const authRoutes = require("./routes/auth");
@@ -43,8 +43,10 @@ app.use(bodyParser.json()); // Parsing JSON data
 app.use(express.static(path.join(__dirname))); // Serve static files from the current directory
 
 // ✅ Use Redis session store
+const RedisStore = connectRedis(session); // Initialize RedisStore with session
+
 app.use(session({
-  store: RedisStore({ client: redisClient }), // Correct usage for v8+ (no 'new' keyword)
+  store: new RedisStore({ client: redisClient }), // Use RedisStore correctly
   secret: 'your-secret-key', // Use a secure secret in production
   resave: false,
   saveUninitialized: false,
