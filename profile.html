@@ -132,13 +132,6 @@
   </footer>
 
   <script>
-    // Ensure phone number is available in localStorage
-    const phone = localStorage.getItem('phone');
-    if (!phone) {
-      alert("No phone found in session. Please login again.");
-      window.location.href = "login.html"; // Redirect to login page if not logged in
-    }
-
     // Handle document upload
     document.getElementById('docUploadForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -146,7 +139,6 @@
       const formData = new FormData();
       formData.append('panCard', document.getElementById('panCard').files[0]);
       formData.append('aadhaarCard', document.getElementById('aadhaarCard').files[0]);
-      formData.append('phone', phone);
 
       try {
         const response = await fetch('/api/upload-docs', {
