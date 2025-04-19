@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname))); // Serve static files from the cu
 
 // ✅ Use Redis session store
 app.use(session({
-  store: new RedisStore({ client: redisClient }), // Correct usage for v8+
+  store: RedisStore({ client: redisClient }), // Correct usage for v8+ (no 'new' keyword)
   secret: 'your-secret-key', // Use a secure secret in production
   resave: false,
   saveUninitialized: false,
