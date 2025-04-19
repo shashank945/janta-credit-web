@@ -7,9 +7,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-const session = require("express-session"); // Import express-session
-const RedisStore = require("connect-redis")(session); // Import connect-redis
-const redis = require("redis"); // Import redis package
+const session = require("express-session");
+
+const Redis = require("ioredis"); // Required for Redis v8 store
+const RedisStore = require("connect-redis").default; // Correct usage for connect-redis@8+
 
 const authRoutes = require("./routes/auth");
 
@@ -18,63 +19,60 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // ✅ Create Redis client
-const redisClient = redis.createClient({
-  host: process.env.REDIS_HOST || 'localhost', // Update with your Redis host
-  port: process.env.REDIS_PORT || 6379, // Update with your Redis port
-  // password: process.env.REDIS_PASSWORD // Uncomment and add if using a password for Redis
+const redisClient = new Redis({
+  host: process.env.REDIS_HOST || "localhost",
+  port: process.env.REDIS_PORT || 6379,
+  // password: process.env.REDIS_PASSWORD, // Uncomment if needed
 });
 
-// Handle Redis connection errors
-redisClient.on('error', (err) => {
-  console.log('Redis error: ', err);
+redisClient.on("error", (err) => {
+  console.error("❌ Redis error:", err);
 });
 
-// ✅ CORS configuration (adjust origin for production deployment if needed)
+// ✅ CORS configuration
 app.use(cors({
-  origin: ['http://127.0.0.1:5500', 'https://janta-credit-web.onrender.com'], // For local dev; update with frontend URL on deployment
+  origin: ['http://127.0.0.1:5500', 'https://janta-credit-web.onrender.com'],
   methods: ['GET', 'POST'],
-  credentials: true // Set credentials to true to allow session cookies
+  credentials: true
 }));
 
 // ✅ Middleware
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname))); // Serve static files
+app.use(express.static(path.join(__dirname)));
 
-// ✅ Set up session middleware with Redis session store
+// ✅ Session with Redis
 app.use(session({
-  store: new RedisStore({ client: redisClient }), // Use Redis to store sessions
-  secret: 'your-secret-key', // Replace with a strong secret key
+  store: new RedisStore({ client: redisClient }),
+  secret: 'your-secret-key', // Use .env in production
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true if using HTTPS
+  cookie: { secure: false }
 }));
 
 // ✅ Routes
 app.use("/api/auth", authRoutes);
 
-// ✅ Profile route to fetch user data from the session
+// ✅ Profile route
 app.get("/api/profile", (req, res) => {
   if (!req.session.phone) {
     return res.status(400).json({ error: "No phone found in session. Please login again." });
   }
 
-  // You can fetch additional profile data from MongoDB using the phone number if needed
-  const userPhone = req.session.phone; // Access the phone number from session
+  const userPhone = req.session.phone;
   res.json({ phone: userPhone });
 });
 
-// ✅ Serve home page
+// ✅ Serve homepage
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// ✅ Connect to MongoDB (non-blocking)
-mongoose
-  .connect(MONGO_URI)
+// ✅ MongoDB
+mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ Connected to MongoDB Atlas"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// ✅ Start server (Render fix: bind to 0.0.0.0)
+// ✅ Start server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
