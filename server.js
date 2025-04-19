@@ -8,12 +8,26 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const session = require("express-session"); // Import express-session
+const RedisStore = require("connect-redis")(session); // Import connect-redis
+const redis = require("redis"); // Import redis package
 
 const authRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
+
+// ✅ Create Redis client
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST || 'localhost', // Update with your Redis host
+  port: process.env.REDIS_PORT || 6379, // Update with your Redis port
+  // password: process.env.REDIS_PASSWORD // Uncomment and add if using a password for Redis
+});
+
+// Handle Redis connection errors
+redisClient.on('error', (err) => {
+  console.log('Redis error: ', err);
+});
 
 // ✅ CORS configuration (adjust origin for production deployment if needed)
 app.use(cors({
@@ -26,8 +40,9 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname))); // Serve static files
 
-// ✅ Set up session middleware
+// ✅ Set up session middleware with Redis session store
 app.use(session({
+  store: new RedisStore({ client: redisClient }), // Use Redis to store sessions
   secret: 'your-secret-key', // Replace with a strong secret key
   resave: false,
   saveUninitialized: true,
