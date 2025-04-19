@@ -75,4 +75,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// PROFILE route (New)
+router.get("/profile", async (req, res) => {
+  const phone = req.session.phone;
+
+  if (!phone) {
+    return res.status(401).json({ error: "Please log in first" });
+  }
+
+  try {
+    const user = await User.findOne({ phone });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({
+      name: user.name,
+      phone: user.phone,
+      age: user.age,
+      address: user.address,
+      creditScore: user.creditScore,
+      fathersName: user.fathersName,
+      dob: user.dob,
+    });
+  } catch (err) {
+    console.error("❌ [PROFILE] Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 module.exports = router;
