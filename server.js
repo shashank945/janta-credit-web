@@ -43,7 +43,8 @@ app.use(bodyParser.json()); // Parsing JSON data
 app.use(express.static(path.join(__dirname))); // Serve static files from the current directory
 
 // ✅ Use Redis session store
-const RedisStore = connectRedis(session); // Initialize RedisStore with session
+const RedisStore = require("connect-redis")(session);
+ // Initialize RedisStore with session
 
 app.use(session({
   store: new RedisStore({ client: redisClient }), // Use RedisStore correctly
