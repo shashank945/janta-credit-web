@@ -9,70 +9,74 @@ const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
 
-const Redis = require("ioredis"); // Required for Redis v8 store
-const RedisStore = require("connect-redis").default; // Correct usage for connect-redis@8+
+const Redis = require("ioredis"); // ✅ ioredis
+const RedisStore = require("connect-redis").default; // ✅ use .default for v8+
 
+// Importing routes
 const authRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// ✅ Create Redis client
+// ✅ Create Redis client using ioredis
 const redisClient = new Redis({
   host: process.env.REDIS_HOST || "localhost",
   port: process.env.REDIS_PORT || 6379,
   // password: process.env.REDIS_PASSWORD, // Uncomment if needed
 });
 
+// Handling Redis connection errors
 redisClient.on("error", (err) => {
   console.error("❌ Redis error:", err);
 });
 
 // ✅ CORS configuration
 app.use(cors({
-  origin: ['http://127.0.0.1:5500', 'https://janta-credit-web.onrender.com'],
+  origin: ['http://127.0.0.1:5500', 'https://janta-credit-web.onrender.com'], // Add more allowed origins if needed
   methods: ['GET', 'POST'],
   credentials: true
 }));
 
 // ✅ Middleware
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname)));
+app.use(bodyParser.json()); // Parsing JSON data
+app.use(express.static(path.join(__dirname))); // Serve static files from the current directory
 
-// ✅ Session with Redis
+// ✅ Use Redis session store
 app.use(session({
-  store: new RedisStore({ client: redisClient }),
-  secret: 'your-secret-key', // Use .env in production
+  store: new RedisStore({ client: redisClient }), // Correct usage for v8+
+  secret: 'your-secret-key', // Use a secure secret in production
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // set to true in production with HTTPS
+    httpOnly: true, // Prevent client-side access to cookie
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
 }));
 
 // ✅ Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // Authentication routes
 
-// ✅ Profile route
+// Profile route - to get user session data
 app.get("/api/profile", (req, res) => {
   if (!req.session.phone) {
     return res.status(400).json({ error: "No phone found in session. Please login again." });
   }
-
-  const userPhone = req.session.phone;
-  res.json({ phone: userPhone });
+  res.json({ phone: req.session.phone });
 });
 
-// ✅ Serve homepage
+// Home route to serve the main page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// ✅ MongoDB
+// ✅ MongoDB Connection
 mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ Connected to MongoDB Atlas"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // ✅ Start server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
